@@ -38,7 +38,7 @@ func Setup(mode string) *gin.Engine {
 		v1.POST("/deploy", controllers.DeployHandler)
 		//获取用户部署过的合约
 		v1.GET("/get-token-list", controllers.GetTokenListHandler)
-		//上传合约信息
+		//上传合约媒体账号信息
 		v1.POST("/token-info", controllers.PostTokenInfoHandler)
 	}
 

@@ -1,1 +1,8 @@
 {"level":"INFO","time":"2024-05-14T08:48:35.233+0800","caller":"logger/logger.go:44","msg":"init logger success"}
+{"level":"INFO","time":"2024-05-14T09:25:55.256+0800","caller":"logger/logger.go:44","msg":"init logger success"}
+{"level":"INFO","time":"2024-05-14T09:28:53.556+0800","caller":"logger/logger.go:44","msg":"init logger success"}
+{"level":"ERROR","time":"2024-05-14T09:28:58.340+0800","caller":"middlewares/auth.go:30","msg":"JWTAuthMiddleware jwt.ParseToken failed","error":"token is expired by 176h59m44.340011s"}
+{"level":"INFO","time":"2024-05-14T09:28:58.340+0800","caller":"logger/logger.go:77","msg":"/api/check-login","status":401,"method":"GET","path":"/api/check-login","query":"","ip":"127.0.0.1","user-agent":"Apifox/1.0.0 (https://apifox.com)","errors":"","cost":0.000827206}
+{"level":"INFO","time":"2024-05-14T09:31:43.732+0800","caller":"logger/logger.go:44","msg":"init logger success"}
+{"level":"ERROR","time":"2024-05-14T09:31:46.817+0800","caller":"middlewares/auth.go:30","msg":"JWTAuthMiddleware jwt.ParseToken failed","error":"token is expired by 177h2m32.817757s"}
+{"level":"INFO","time":"2024-05-14T09:31:46.817+0800","caller":"logger/logger.go:77","msg":"/api/check-login","status":401,"method":"GET","path":"/api/check-login","query":"","ip":"127.0.0.1","user-agent":"Apifox/1.0.0 (https://apifox.com)","errors":"","cost":0.000286983}

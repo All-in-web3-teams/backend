@@ -1,7 +1,6 @@
-app:
-  name: "dog"
-  mode: "dev"
-  port: 9001
+name: "dog"
+mode: "dev"
+port: 9001
 log:
   level: "debug"
   filename: "web.log"
