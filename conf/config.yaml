@@ -1,0 +1,24 @@
+app:
+  name: "dog"
+  mode: "dev"
+  port: 9001
+log:
+  level: "debug"
+  filename: "web.log"
+  max_size: 200
+  max_age: 30
+  max_backups: 5
+mysql:
+  host: "127.0.0.1"
+  port: 3306
+  user: "root"
+  password: "123456"
+  dbname: "dog"
+redis:
+  host: "127.0.0.1"
+  port: 6379
+  password: ""
+  db: 0
+  pool_size: 100
+ethclient:
+  url: "https://sepolia.infura.io/xxxxxxxxx"
