@@ -35,5 +35,21 @@ func GetTokenListHandler(c *gin.Context) {
 		},
 	})
 }
+func GetAllTokenAddressAndNameHandler(c *gin.Context) {
+	tokenAddressAndName, err := logic.GetAllTokenAddressAndName()
+	if err != nil {
+		zap.L().Error("GetAllTokenAddressAndNameHandler logic.GetAllTokenAddressAndName failed", zap.Error(err))
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"msg":  "服务端错误",
+			"data": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"msg":  "success",
+		"data": tokenAddressAndName,
+	})
+}
 
 func PostTokenInfoHandler(c *gin.Context) {}

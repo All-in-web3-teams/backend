@@ -23,3 +23,8 @@ func GetContractByAddress(address string) (contractAddresses []string, err error
 	err = db.Model(&models.User{}).Select("contract_address").Where("address = ?", address).Find(&contractAddresses).Error
 	return
 }
+
+func GetAllTokenAddressAndName() (results []models.TokenAddressAndName, err error) {
+	err = db.Table(models.User{}.TableName()).Select("contract_address, name").Scan(&results).Error
+	return
+}

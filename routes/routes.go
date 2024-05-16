@@ -40,6 +40,7 @@ func Setup(mode string) *gin.Engine {
 		v1.GET("/get-token-list", controllers.GetTokenListHandler)
 		//上传合约媒体账号信息
 		v1.POST("/token-info", controllers.PostTokenInfoHandler)
+		v1.GET("/get-all-token", controllers.GetAllTokenAddressAndNameHandler)
 	}
 
 	r.NoRoute(func(c *gin.Context) {

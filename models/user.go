@@ -18,3 +18,9 @@ func (u User) TableName() string {
 	//绑定MYSQL表名为users
 	return "user"
 }
+
+// TokenAddressAndName 合约地址和名称
+type TokenAddressAndName struct {
+	ContractAddress string `json:"contract_address"`
+	Name            string `json:"name"`
+}
