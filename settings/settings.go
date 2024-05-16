@@ -52,8 +52,6 @@ type EthClientConfig struct {
 	Url string `mapstructure:"url"`
 }
 
-var Config AppConfig
-
 func Init() (err error) {
 	err = godotenv.Load()
 	if err != nil {
@@ -81,7 +79,7 @@ func Init() (err error) {
 	viper.WatchConfig()
 	viper.OnConfigChange(func(in fsnotify.Event) {
 		fmt.Println("配置文件修改了")
-		overrideWithEnv()  // 确保在更改时重新加载环境变量
+		overrideWithEnv() // 确保在更改时重新加载环境变量
 		if err := viper.Unmarshal(Conf); err != nil {
 			fmt.Printf("viper.Unmarshal failed, err:%v\n", err)
 		}

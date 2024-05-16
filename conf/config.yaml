@@ -3,7 +3,7 @@ mode: "dev"
 port: 9001
 log:
   level: "debug"
-  filename: "web.log"
+  filename: ".web.log"
   max_size: 200
   max_age: 30
   max_backups: 5
@@ -20,4 +20,4 @@ redis:
   db: 0
   pool_size: 100
 ethclient:
-  url: "https://sepolia.infura.io/xxxxxxxxx"
+  url: ${ETH_CLIENT_URL}
