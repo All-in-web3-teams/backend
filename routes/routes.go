@@ -28,11 +28,11 @@ func Setup(mode string) *gin.Engine {
 	//登陆
 	v1.GET("/nonce", controllers.GetNonceHandler)
 	v1.POST("/login", controllers.LoginHandler)
+	//检测用户是否登陆
+	v1.GET("/check-login", controllers.CheckUserLoginHandler)
 
 	v1.Use(middlewares.JWTAuthMiddleware())
 	{
-		//检测用户是否登陆
-		v1.GET("/check-login", controllers.CheckUserLoginHandler)
 		//用户部署合约
 		v1.GET("/abi", controllers.GetAbiBytecodeHandler)
 		v1.POST("/deploy", controllers.DeployHandler)

@@ -3,25 +3,39 @@ package controllers
 import (
 	"backend/logic"
 	"backend/models"
+	"backend/pkg/jwt"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"net/http"
 )
 
 func CheckUserLoginHandler(c *gin.Context) {
-	address, err := getCurrentUser(c)
+	// 1.获取cookie中的token
+	cookie, err := c.Request.Cookie("token")
 	if err != nil {
-		zap.L().Error("CheckUserLoginHandler getCurrentUser failed", zap.Error(err))
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"msg":  "服务端错误",
-			"data": "解析address失败",
+		zap.L().Error("CheckUserLoginHandler c.Request.Cookie failed", zap.Error(err))
+		c.JSON(http.StatusOK, gin.H{
+			"msg":  "未登陆",
+			"data": nil,
+		})
+		return
+	}
+	tokenValue := cookie.Value
+
+	// 2.解析JWT
+	mc, err := jwt.ParseToken(tokenValue)
+	if err != nil {
+		zap.L().Error("CheckUserLoginHandler jwt.ParseToken failed", zap.Error(err))
+		c.JSON(http.StatusOK, gin.H{
+			"msg":  "未登陆",
+			"data": nil,
 		})
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"msg":  "success", // 成功信息
-		"data": address,   // 已登录
+		"msg":  "success",
+		"data": mc.Address,
 	})
 }
 
