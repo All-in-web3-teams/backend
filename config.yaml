@@ -1,23 +1,17 @@
-name: "dog"
-mode: "dev"
-port: 9001
-log:
-  level: "debug"
-  filename: "web.log"
-  max_size: 200
-  max_age: 30
-  max_backups: 5
-mysql:
+Service:
+  name: "dog"
+  port: ":9001"
+Mysqk:
   host: ${DB_HOST}
   port: ${DB_PORT}
   user: ${DB_USER}
   password: ${DB_PASSWORD}
   dbname: ${DB_NAME}
-redis:
+Redis:
   host: ${REDIS_ADDR}
   port: ${REDIS_PORT}
   password: ""
   db: 0
   pool_size: 100
-ethclient:
+Ethclient:
   url: "https://sepolia.infura.io/xxxxxxxxx"
