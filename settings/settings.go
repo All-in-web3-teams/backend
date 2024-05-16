@@ -2,7 +2,10 @@ package settings
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/fsnotify/fsnotify"
+	"github.com/joho/godotenv"
 	"github.com/spf13/viper"
 )
 
@@ -49,13 +52,26 @@ type EthClientConfig struct {
 	Url string `mapstructure:"url"`
 }
 
+var Config AppConfig
+
 func Init() (err error) {
+	err = godotenv.Load()
+	if err != nil {
+		fmt.Printf("Error loading .env file: %v\n", err)
+		return
+	}
+
 	viper.SetConfigFile("./conf/config.yaml")
+	viper.AutomaticEnv()
+
 	err = viper.ReadInConfig()
 	if err != nil {
 		fmt.Printf("viper.ReadInConfig() failed, err:%v\n", err)
 		return
 	}
+
+	// 手动解析环境变量
+	overrideWithEnv()
 
 	// 把读取到的配置信息反序列化到 Conf 变量中
 	if err := viper.Unmarshal(Conf); err != nil {
@@ -65,9 +81,23 @@ func Init() (err error) {
 	viper.WatchConfig()
 	viper.OnConfigChange(func(in fsnotify.Event) {
 		fmt.Println("配置文件修改了")
+		overrideWithEnv()  // 确保在更改时重新加载环境变量
 		if err := viper.Unmarshal(Conf); err != nil {
 			fmt.Printf("viper.Unmarshal failed, err:%v\n", err)
 		}
 	})
 	return
+}
+
+func overrideWithEnv() {
+	// 遍历所有键值对并替换其中的环境变量占位符
+	for _, key := range viper.AllKeys() {
+		value := viper.GetString(key)
+		viper.Set(key, expandEnv(value))
+	}
+}
+
+// expandEnv 替换字符串中的环境变量占位符
+func expandEnv(value string) string {
+	return os.ExpandEnv(value)
 }

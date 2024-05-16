@@ -1,3 +1,5 @@
-go mod tidy
-
-需要在./conf/config.yaml中配置相关信息
+1. add .env
+2. start docker
+```shell
+docker compose up
+```
