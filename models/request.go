@@ -9,9 +9,9 @@ type LoginParam struct {
 
 type DeployParam struct {
 	//Address     string `json:"address" binding:"required"`
-	TxHash      string `json:"tx_hash" binding:"required"`
+	TxHash      string `json:"txHash" binding:"required"`
 	Name        string `json:"name" binding:"required"`
 	Symbol      string `json:"symbol" binding:"required"`
-	TotalSupply int64  `json:"total_supply" binding:"required"`
+	TotalSupply string `json:"totalSupply" binding:"required"`
 	Decimals    int64  `json:"decimals" binding:"required"`
 }

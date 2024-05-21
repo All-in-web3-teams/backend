@@ -63,6 +63,7 @@ func DeployHandler(c *gin.Context) {
 	for i := 0; i <= 120; i++ {
 		receipt, contractAddress, err := logic.CheckDeploySuccess(p.TxHash)
 		if err != nil || receipt == "Pending" {
+			zap.L().Error("DeployHandler logic.CheckDeploySuccess failed", zap.Error(err))
 			<-time.After(time.Second)
 			continue
 		}

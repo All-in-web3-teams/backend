@@ -1,39 +1,33 @@
-version: '3.8'
-
+version: "3.8"
 services:
-  app:
+  mysql5744:
+    image: mysql:5.7.44
+    container_name: mysql5744
+    ports:
+      - "33061:3306"
+    command: "--default-authentication-plugin=mysql_native_password --init-file /data/application/init.sql"
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    env_file:
+      - .env
+    volumes:
+      - ./init.sql:/data/application/init.sql
+  redis724:
+    image: redis:7.2.4
+    container_name: redis724
+    env_file:
+      - .env
+  dog_app:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: dog_app
+    command: sh -c "./wait-for.sh mysql5744:3306 redis724:6379 -- ./dog_app ./conf/config.yaml"
     ports:
       - "9001:9001"
     env_file:
       - .env
     depends_on:
-      - db
-      - redis
-
-  db:
-    image: mysql:8.0
-    container_name: mysql_db
-    environment:
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-    env_file:
-      - .env
-    volumes:
-      - db_data:/var/lib/mysql
-
-  redis:
-    image: redis:alpine
-    container_name: redis
-    env_file:
-      - .env
-    volumes:
-      - redis_data:/data
-
-volumes:
-  db_data:
-  redis_data:
+      - mysql5744
+      - redis724

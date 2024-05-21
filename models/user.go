@@ -21,6 +21,6 @@ func (u User) TableName() string {
 
 // TokenAddressAndName 合约地址和名称
 type TokenAddressAndName struct {
-	ContractAddress string `json:"contract_address"`
+	ContractAddress string `json:"contractAddress"`
 	Name            string `json:"name"`
 }
