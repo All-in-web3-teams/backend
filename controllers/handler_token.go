@@ -100,14 +100,14 @@ func GetTokenInfoHandler(c *gin.Context) {
 		})
 		return
 	}
-	type contractInfoJson struct {
-		ContractAddress string
-		Homepage        string
-		XUrl            string
-		Discord         string
-		Telegram        string
+	type socialMediaRes struct {
+		ContractAddress string `json:"contractAddress"`
+		Homepage        string `json:"homepage"`
+		XUrl            string `json:"xUrl"`
+		Discord         string `json:"discord"`
+		Telegram        string `json:"telegram"`
 	}
-	socialMedia := contractInfoJson{
+	socialMedia := socialMediaRes{
 		ContractAddress: contractInfo.ContractAddress,
 		Homepage:        contractInfo.Homepage,
 		XUrl:            contractInfo.XUrl,
