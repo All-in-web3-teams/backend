@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  mysql5744:
+  mysql:
     image: mysql:5.7.44
     container_name: mysql5744
     ports:
@@ -13,7 +13,7 @@ services:
       - .env
     volumes:
       - ./init.sql:/data/application/init.sql
-  redis724:
+  redis:
     image: redis:7.2.4
     container_name: redis724
     env_file:

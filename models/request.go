@@ -15,3 +15,11 @@ type DeployParam struct {
 	TotalSupply string `json:"totalSupply" binding:"required"`
 	Decimals    int64  `json:"decimals" binding:"required"`
 }
+
+type ContractInfoParam struct {
+	ContractAddress string `json:"contractAddress" binding:"required"`
+	Homepage        string `json:"homepage"`
+	XUrl            string `json:"xUrl"`
+	Discord         string `json:"discord"`
+	Telegram        string `json:"telegram"`
+}

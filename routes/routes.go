@@ -30,7 +30,6 @@ func Setup(mode string) *gin.Engine {
 	v1.POST("/login", controllers.LoginHandler)
 	//检测用户是否登陆
 	v1.GET("/check-login", controllers.CheckUserLoginHandler)
-
 	v1.Use(middlewares.JWTAuthMiddleware())
 	{
 		//用户部署合约
@@ -38,9 +37,12 @@ func Setup(mode string) *gin.Engine {
 		v1.POST("/deploy", controllers.DeployHandler)
 		//获取用户部署过的合约
 		v1.GET("/get-token-list", controllers.GetTokenListHandler)
-		//上传合约媒体账号信息
-		v1.POST("/token-info", controllers.PostTokenInfoHandler)
+		//获取所有部署过的合约以及常见token的name和address
 		v1.GET("/get-all-token", controllers.GetAllTokenAddressAndNameHandler)
+		//上传合约媒体账号信息
+		v1.POST("/post-token-info", controllers.PostTokenInfoHandler)
+		//获取合约媒体账号信息
+		v1.GET("/get-token-info", controllers.GetTokenInfoHandler)
 	}
 
 	r.NoRoute(func(c *gin.Context) {

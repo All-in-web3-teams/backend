@@ -19,6 +19,20 @@ func (u User) TableName() string {
 	return "user"
 }
 
+type ContractInfo struct {
+	gorm.Model
+	ContractAddress string
+	Homepage        string
+	XUrl            string
+	Discord         string
+	Telegram        string
+}
+
+func (c ContractInfo) TableName() string {
+	//绑定MYSQL表名为users
+	return "contract_info"
+}
+
 // TokenAddressAndName 合约地址和名称
 type TokenAddressAndName struct {
 	ContractAddress string `json:"contractAddress"`

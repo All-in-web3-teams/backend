@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"backend/logic"
+	"backend/models"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"net/http"
@@ -52,4 +53,69 @@ func GetAllTokenAddressAndNameHandler(c *gin.Context) {
 	})
 }
 
-func PostTokenInfoHandler(c *gin.Context) {}
+func PostTokenInfoHandler(c *gin.Context) {
+	p := new(models.ContractInfoParam)
+	if err := c.ShouldBindJSON(p); err != nil {
+		zap.L().Error("PostTokenInfoHandler c.ShouldBindJSON failed", zap.Error(err))
+		c.JSON(http.StatusBadRequest, gin.H{
+			"msg":  "请求参数错误",
+			"data": false,
+		})
+		return
+	}
+
+	err := logic.SaveContractSocialMediaInfo(p)
+	if err != nil {
+		zap.L().Error("PostTokenInfoHandler logic.SaveContractInfo failed", zap.Error(err))
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"msg":  "服务端错误",
+			"data": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"msg":  "success",
+		"data": true,
+	})
+}
+
+func GetTokenInfoHandler(c *gin.Context) {
+	contractAddress, ok := c.GetQuery("contractAddress")
+	if !ok {
+		zap.L().Error("GetNonceHandler with invalid param")
+		c.JSON(http.StatusBadRequest, gin.H{
+			"msg":  "请求参数错误",
+			"data": false,
+		})
+		return
+	}
+
+	contractInfo, err := logic.GetContractInfo(contractAddress)
+	if err != nil {
+		zap.L().Error("GetTokenInfoHandler logic.GetContractInfo failed", zap.Error(err))
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"msg":  "服务端错误",
+			"data": err.Error(),
+		})
+		return
+	}
+	type contractInfoJson struct {
+		ContractAddress string
+		Homepage        string
+		XUrl            string
+		Discord         string
+		Telegram        string
+	}
+	socialMedia := contractInfoJson{
+		ContractAddress: contractInfo.ContractAddress,
+		Homepage:        contractInfo.Homepage,
+		XUrl:            contractInfo.XUrl,
+		Discord:         contractInfo.Discord,
+		Telegram:        contractInfo.Telegram,
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"msg":  "success",
+		"data": socialMedia,
+	})
+}

@@ -36,3 +36,13 @@ func GetAllTokenAddressAndName() (results []models.TokenAddressAndName, err erro
 	}
 	return
 }
+
+func SaveContractSocialMediaInfo(p *models.ContractInfoParam) (err error) {
+	err = mysql.InsertContractSocialMediaInfo(p)
+	return
+}
+
+func GetContractInfo(contractAddress string) (contractInfo models.ContractInfo, err error) {
+	contractInfo, err = mysql.GetContractInfoByAddress(contractAddress)
+	return
+}

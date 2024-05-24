@@ -24,6 +24,13 @@ func Init(cfg *settings.MySQLConfig) (err error) {
 		return
 	}
 
-	db.Table(models.User{}.TableName()).AutoMigrate(&models.User{})
+	err = db.Table(models.User{}.TableName()).AutoMigrate(&models.User{})
+	if err != nil {
+		return
+	}
+	err = db.Table(models.ContractInfo{}.TableName()).AutoMigrate(&models.ContractInfo{})
+	if err != nil {
+		return
+	}
 	return
 }

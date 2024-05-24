@@ -2,6 +2,8 @@ package mysql
 
 import (
 	"backend/models"
+	"errors"
+	"gorm.io/gorm"
 	"math/big"
 )
 
@@ -34,5 +36,37 @@ func GetContractByAddress(address string) (contractAddresses []string, err error
 
 func GetAllTokenAddressAndName() (results []models.TokenAddressAndName, err error) {
 	err = db.Table(models.User{}.TableName()).Select("contract_address, name").Scan(&results).Error
+	return
+}
+
+func InsertContractSocialMediaInfo(p *models.ContractInfoParam) (err error) {
+	var contractInfo = models.ContractInfo{
+		ContractAddress: p.ContractAddress,
+		Homepage:        p.Homepage,
+		XUrl:            p.XUrl,
+		Discord:         p.Discord,
+		Telegram:        p.Telegram,
+	}
+	var exists models.ContractInfo
+	if err = db.Table(models.ContractInfo{}.TableName()).Where("contract_address = ?", p.ContractAddress).First(&exists).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) { // 如果记录不存在，插入新记录
+			return db.Create(&contractInfo).Error
+		} else {
+			return err // 返回其他错误
+		}
+	}
+	var fieldsToUpdate = map[string]interface{}{
+		"ContractAddress": p.ContractAddress,
+		"Homepage":        p.Homepage,
+		"XUrl":            p.XUrl,
+		"Discord":         p.Discord,
+		"Telegram":        p.Telegram,
+	}
+	err = db.Model(&exists).Updates(&fieldsToUpdate).Error
+	return
+}
+
+func GetContractInfoByAddress(contractAddress string) (contractInfo models.ContractInfo, err error) {
+	err = db.Table(models.ContractInfo{}.TableName()).Where("contract_address = ?", contractAddress).First(&contractInfo).Error
 	return
 }
