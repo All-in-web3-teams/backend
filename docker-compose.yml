@@ -29,5 +29,5 @@ services:
     env_file:
       - .env
     depends_on:
-      - mysql5744
-      - redis724
+      - mysql
+      - redis
