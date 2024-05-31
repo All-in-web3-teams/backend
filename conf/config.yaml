@@ -1,6 +1,7 @@
 name: "dog"
 mode: "dev"
 port: 9001
+private_key: ${PRIVATE_KEY}
 log:
   level: "debug"
   filename: ".web.log"

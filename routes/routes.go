@@ -30,6 +30,7 @@ func Setup(mode string) *gin.Engine {
 	v1.POST("/login", controllers.LoginHandler)
 	//检测用户是否登陆
 	v1.GET("/check-login", controllers.CheckUserLoginHandler)
+
 	v1.Use(middlewares.JWTAuthMiddleware())
 	{
 		//用户部署合约
@@ -43,6 +44,8 @@ func Setup(mode string) *gin.Engine {
 		v1.POST("/post-token-info", controllers.PostTokenInfoHandler)
 		//获取合约媒体账号信息
 		v1.GET("/get-token-info", controllers.GetTokenInfoHandler)
+		//添加consumer
+		v1.GET("/add-consumer", controllers.AddConsumerHandler)
 	}
 
 	r.NoRoute(func(c *gin.Context) {
