@@ -3,7 +3,7 @@ package logic
 import (
 	"backend/controllers/automation"
 	"backend/controllers/automationRegistrar2_1"
-	"backend/controllers/vrfV2"
+	"backend/controllers/vrfV2_5"
 	"backend/settings"
 	"context"
 	"crypto/ecdsa"
@@ -48,13 +48,13 @@ func AddConsumer(raffleAddress string) error {
 	auth.Value = big.NewInt(0)     // in wei
 	auth.GasLimit = uint64(500000) // in units
 	auth.GasPrice = gasPrice
-	address := common.HexToAddress("0x8103B0A8A00be2DDC778e6e7eaa21791Cd364625")
-	instance, err := vrfV2.NewVrfV2(address, client)
+	address := common.HexToAddress("0x9DdfaCa8183c41ad55329BdeeD9F6A8d53168B1B")
+	instance, err := vrfV2_5.NewVrfV25(address, client)
 	if err != nil {
 		return err
 	}
-
-	var subId uint64 = 10486
+	numStr := "19709626778135997837660097477283008945859889359416389923405312488169579505131"
+	subId, _ := new(big.Int).SetString(numStr, 10)
 	tx, err := instance.AddConsumer(auth, subId, common.HexToAddress(raffleAddress))
 	if err != nil {
 		return err

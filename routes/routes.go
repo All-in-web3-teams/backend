@@ -48,7 +48,6 @@ func Setup(mode string) *gin.Engine {
 		v1.GET("/add-consumer", controllers.AddConsumerHandler)
 		//添加automation
 		v1.GET("/add-automation", controllers.AddAutomationHandler)
-
 	}
 
 	r.NoRoute(func(c *gin.Context) {
