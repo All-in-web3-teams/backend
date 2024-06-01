@@ -17,8 +17,16 @@ func AddConsumerHandler(c *gin.Context) {
 		})
 		return
 	}
-
-	if !AddressCheck(raffleAddress) {
+	contractAddress, ok := c.GetQuery("contractAddress")
+	if !ok {
+		zap.L().Error("AddConsumerHandler with invalid param")
+		c.JSON(http.StatusBadRequest, gin.H{
+			"msg":  "请求参数错误",
+			"data": false,
+		})
+		return
+	}
+	if !AddressCheck(raffleAddress) || !AddressCheck(contractAddress) {
 		zap.L().Error("AddConsumerHandler with invalid param")
 		c.JSON(http.StatusBadRequest, gin.H{
 			"msg":  "请求参数错误",
@@ -36,6 +44,16 @@ func AddConsumerHandler(c *gin.Context) {
 		})
 		return
 	}
+	err = logic.SaveRaffleAddress(contractAddress, raffleAddress)
+	if err != nil {
+		zap.L().Error("AddConsumerHandler logic.SaveRaffleAddress failed", zap.Error(err))
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"msg":  "服务端错误",
+			"data": false,
+		})
+		return
+	}
+
 	c.JSON(http.StatusOK, gin.H{
 		"msg":  "success",
 		"data": true,

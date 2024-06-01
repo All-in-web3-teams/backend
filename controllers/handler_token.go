@@ -106,6 +106,7 @@ func GetTokenInfoHandler(c *gin.Context) {
 		XUrl            string `json:"xUrl"`
 		Discord         string `json:"discord"`
 		Telegram        string `json:"telegram"`
+		RaffleAddress   string `json:"raffleAddress"`
 	}
 	socialMedia := socialMediaRes{
 		ContractAddress: contractInfo.ContractAddress,
@@ -113,6 +114,7 @@ func GetTokenInfoHandler(c *gin.Context) {
 		XUrl:            contractInfo.XUrl,
 		Discord:         contractInfo.Discord,
 		Telegram:        contractInfo.Telegram,
+		RaffleAddress:   contractInfo.RaffleAddress,
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"msg":  "success",

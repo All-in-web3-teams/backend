@@ -4,6 +4,7 @@ import (
 	"backend/controllers/automation"
 	"backend/controllers/automationRegistrar2_1"
 	"backend/controllers/vrfV2_5"
+	"backend/dao/mysql"
 	"backend/settings"
 	"context"
 	"crypto/ecdsa"
@@ -148,4 +149,8 @@ func AddAutomation(raffleAddress string) error {
 	}
 	println(txRegistrar.Hash().Hex())
 	return nil
+}
+
+func SaveRaffleAddress(contractAddress string, raffleAddress string) (err error) {
+	return mysql.SaveRaffleAddress(contractAddress, raffleAddress)
 }

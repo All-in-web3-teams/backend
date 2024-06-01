@@ -26,6 +26,7 @@ type ContractInfo struct {
 	XUrl            string
 	Discord         string
 	Telegram        string
+	RaffleAddress   string
 }
 
 func (c ContractInfo) TableName() string {

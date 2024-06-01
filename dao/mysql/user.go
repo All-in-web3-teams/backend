@@ -70,3 +70,24 @@ func GetContractInfoByAddress(contractAddress string) (contractInfo models.Contr
 	err = db.Table(models.ContractInfo{}.TableName()).Where("contract_address = ?", contractAddress).First(&contractInfo).Error
 	return
 }
+
+func SaveRaffleAddress(contractAddress string, raffleAddress string) (err error) {
+	var contractInfo = models.ContractInfo{
+		ContractAddress: contractAddress,
+		Homepage:        "",
+		XUrl:            "",
+		Discord:         "",
+		Telegram:        "",
+		RaffleAddress:   raffleAddress,
+	}
+	var exists models.ContractInfo
+	if err = db.Table(models.ContractInfo{}.TableName()).Where("contract_address = ?", contractAddress).First(&exists).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) { // 如果记录不存在，插入新记录
+			return db.Create(&contractInfo).Error
+		} else {
+			return err // 返回其他错误
+		}
+	}
+	err = db.Table(models.ContractInfo{}.TableName()).Where("contract_address = ?", contractAddress).Update("raffle_address", raffleAddress).Error
+	return
+}
